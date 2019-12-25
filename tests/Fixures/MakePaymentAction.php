@@ -2,6 +2,7 @@
 
 namespace Tests\Fixtures;
 
+use App\Events\PaymentMade;
 use Illuminate\Support\Str;
 use App\Actions\Interfaces\MakePaymentInterface;
 
@@ -13,6 +14,6 @@ class MakePaymentAction implements MakePaymentInterface
 
         event(new PaymentMade($userId, $paymentData));
 
-        return "{'paymentDataId': $paymentData}";
+        return (object)['paymentDataId' =>  $paymentData ];
     }
 }
