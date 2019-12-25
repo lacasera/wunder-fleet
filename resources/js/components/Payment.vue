@@ -7,7 +7,7 @@
                type="text"
                required
                class="form-control"
-               @change="setInputState"
+               @load="setInputState"
                :value="getAccountOwner"
                name="account_owner"
                placeholder="John Doe">
@@ -33,6 +33,12 @@
           getAccountOwner: function () {
               return this.$store.state.first_name +' ' + this.$store.state.last_name
           }
+        },
+        mounted(){
+            this.$store.dispatch('setState', {
+                name: 'account_owner',
+                value: this.$store.state.first_name +' ' + this.$store.state.last_name
+            })
         },
         data(){
             return {

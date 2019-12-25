@@ -2,44 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\GetAction;
-use App\Actions\IssueTokenAction;
-use App\Actions\StoreAction;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
+
+use App\Events\MakePayment;
+use App\Actions\StoreUserAction;
+use App\Actions\Interfaces\MakePaymentInterface;
 
 class UserController extends Controller
 {
-    public function _construct()
+    protected $makePaymentAction;
+
+    public function __construct(MakePaymentInterface $makePaymentAction)
     {
-        $this->middleware('protected')
-            ->except(['storeDetails']);
+        $this->makePaymentAction = $makePaymentAction;
     }
 
-
     /**
-     * registers a new user.
-     *
      * @param  \Illuminate\Http\Request $request
-     * @param StoreAction $storeAction
-     * @param IssueTokenAction $issueTokenAction
+     * @param StoreUserAction $storeUserAction
      * @return void
      */
-    public function storeDetails(Request $request, StoreAction $storeAction, IssueTokenAction $issueTokenAction)
+    public function __invoke(Request $request, StoreUserAction $storeUserAction)
     {
-        $results  = $storeAction->execute($request->all());
+        $user  = $storeUserAction->execute($request->all());
 
-        $results['token'] = $issueTokenAction->execute($results['user']);
+        if ($user) {
+           $paymentResponse = $this->makePaymentAction->execute(
+               $user->id,
+               $request->account_owner,
+               $request->iban
+           );
+           $paymentDataId = $paymentResponse->paymentDataId;
+        }
 
-        return sendSuccess($results, 201);
+        return sendSuccess(compact('user', 'paymentDataId'), 201);
     }
 
-    /**
-     * @param Request $request
-     * @param GetAction $getAction
-     */
-    public function getDetails(Request $request, GetAction $getAction)
-    {
-        
-    }
 }

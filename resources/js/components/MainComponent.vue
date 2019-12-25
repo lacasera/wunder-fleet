@@ -5,7 +5,7 @@
                 <div class="card">
                     <div class="card-header">{{getTitle}}</div>
                     <div class="card-body">
-                        <form action="" class="form">
+                        <form class="form" v-if="!notification">
                             <div class="persnal-info" v-if="currentForm === 1">
                                 <personal-information />
                             </div>
@@ -16,17 +16,25 @@
                                 <payment />
                             </div>
                         </form>
+                        <div v-else class="completeted">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Completed!</strong> {{notification}}.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-secondary"
-                            @click="currentForm--"
-                            :disabled="currentForm === 1">
+                        <button class="btn btn-secondary"  @click="currentForm--" :disabled="currentForm === 1">
                             Back
                         </button>
-                        <button
-                            class="btn btn-success float-right"
-                            @click="nextButtonHandler">
-                            {{currentForm === 3 ? 'Submit' : 'Next'}}
+                        <button v-if="currentForm !==3" class="btn btn-success float-right" @click="nextButtonHandler">
+                            Next
+                        </button>
+                        <button v-else class="btn btn-success float-right" @click="submitData">
+                            <i v-if="isBusy" class="fa fa-spinner fa-spin"></i>
+                            Submit
                         </button>
                     </div>
                 </div>
@@ -42,6 +50,10 @@
     import PersonalInformation from './PersonalInformation'
 
     export default {
+        mounted(){
+            const stage = localStorage.getItem('stage')
+            this.currentForm = (stage) ? parseInt(stage) : 1
+        },
         computed: {
            getTitle: function () {
                let pageTitle = ''
@@ -60,27 +72,32 @@
         },
         data() {
             return {
-                currentForm: 1
+                currentForm: 1,
+                isBusy: false,
+                notification: ''
             }
-        },
-        mounted(){
-
         },
         methods: {
             nextButtonHandler: function () {
                 if (this.currentForm !== 3) {
                     this.currentForm++
-                    return;
+                    localStorage.setItem('stage', this.currentForm)
                 }
-
-                if (this.currentForm === 3) {
-                   const data = this.$store.state
-                    axios.post('/api/store', data )
-                        .then(({ data }) => {
-                            console.log(data)
-                        })
-                        .catch(error => console.log(error))
-                }
+            },
+            submitData:  function () {
+                this.isBusy = true
+                const data = this.$store.state
+                return axios.post('/api/store', data )
+                    .then(({ data : { data } }) => {
+                        this.isBusy =false
+                        this.notification = data.paymentDataId
+                        setTimeout(() => {
+                            localStorage.clear()
+                            window.location.reload()
+                        }, 3000)
+                    }).catch(error => {
+                        this.isBusy = false;
+                    })
             }
         },
         components: {
