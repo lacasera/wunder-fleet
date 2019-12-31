@@ -116,6 +116,28 @@ class ApiTest extends TestCase
     }
 
     /** @test */
+    public function should_fail_if_phone_number_is_invalid()
+    {
+        $userData = factory(User::class)->raw(['phone_number' => 'invalid phone number']);
+
+        $postData = array_merge($userData, [
+            'iban' => (string) random_int(100, 9999)
+        ]);
+
+        $response = $this->post('/api/store', $postData);
+
+        $expected = [
+            "status" => "error",
+            "data" => [
+                "phone_number" => ["The phone number field contains an invalid number."]
+            ]
+        ];
+
+        $response->assertStatus(400);
+        $this->assertEquals($response->json(), $expected);
+    }
+
+    /** @test */
     public function should_fail_if_street_is_missing()
     {
         $userData = factory(User::class)->raw(['street' => '']);

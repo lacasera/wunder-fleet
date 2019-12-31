@@ -38,3 +38,4 @@ DB_PASSWORD={database password}
 2. Frontend
 - [Vuejs](https://vuejs.org/) with [Vuex](https://vuex.vuejs.org/)
 
+####

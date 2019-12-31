@@ -2151,6 +2151,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PersonalInformation",
   data: function data() {
@@ -8244,11 +8247,21 @@ var render = function() {
           type: "tel",
           required: "",
           name: "phone_number",
-          placeholder: ""
+          placeholder: "+233242424244"
         },
         domProps: { value: _vm.phone_number },
         on: { change: _vm.setInputState }
-      })
+      }),
+      _vm._v(" "),
+      _c(
+        "p",
+        { staticClass: "text-info", staticStyle: { "font-size": "smaller" } },
+        [
+          _vm._v(
+            "\n            Phone number should include country code\n        "
+          )
+        ]
+      )
     ])
   ])
 }

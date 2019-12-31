@@ -31,7 +31,10 @@
                class="form-control"
                @change="setInputState"
                name="phone_number"
-               placeholder="">
+               placeholder="+233242424244">
+            <p class="text-info" style="font-size: smaller">
+                Phone number should include country code
+            </p>
         </div>
     </div>
 </template>

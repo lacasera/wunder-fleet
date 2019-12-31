@@ -29,7 +29,7 @@ class ApiRequest extends JsonRequest
             "city" => "bail|required|string",
             "iban" => "bail|required|string",
             "house_number" => "bail|required|string",
-            "phone_number" => "bail|required"
+            "phone_number" => "bail|required|phone:AUTO"
         ];
     }
 }

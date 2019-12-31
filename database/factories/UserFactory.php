@@ -18,7 +18,7 @@ $factory->define(App\User::class, function (Faker $faker) {
     return [
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
-        'phone_number' => $faker->unique()->phoneNumber,
+        'phone_number' => '+233242424244',
         'street' => $faker->streetAddress,
         'house_number' => (string) $faker->randomNumber(),
         'zip_code' => (string) $faker->randomNumber(),
