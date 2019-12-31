@@ -10,7 +10,9 @@ class StoreUserAction
     {
         $personaData =  $this->getPersonalInformation($data);
 
-        $user = User::updateOrCreate(['phone_number' => $personaData['phone_number']], $personaData);
+        $user = User::updateOrCreate([
+            'phone_number' => $personaData['phone_number']
+        ], $personaData);
 
         return $user;
     }

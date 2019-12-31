@@ -5,7 +5,8 @@
                 <div class="card">
                     <div class="card-header">{{getTitle}}</div>
                     <div class="card-body">
-                        <form class="form" v-if="!notification">
+                        <errors v-if="errors" :errors="errors"></errors>
+                        <form class="form" method="post"  v-if="!notification">
                             <div class="persnal-info" v-if="currentForm === 1">
                                 <personal-information />
                             </div>
@@ -32,7 +33,7 @@
                         <button v-if="currentForm !==3" class="btn btn-success float-right" @click="nextButtonHandler">
                             Next
                         </button>
-                        <button v-else class="btn btn-success float-right" @click="submitData">
+                        <button v-else class="btn btn-success float-right" type="button" @click="submitData">
                             <i v-if="isBusy" class="fa fa-spinner fa-spin"></i>
                             Submit
                         </button>
@@ -46,7 +47,8 @@
 <script>
     import axios from 'axios'
     import Address from './Address'
-    import Payment from "./Payment";
+    import RequestErrors from './RequestErrors'
+    import Payment from './Payment'
     import PersonalInformation from './PersonalInformation'
 
     export default {
@@ -74,7 +76,8 @@
             return {
                 currentForm: 1,
                 isBusy: false,
-                notification: ''
+                notification: '',
+                errors: ''
             }
         },
         methods: {
@@ -85,9 +88,10 @@
                 }
             },
             submitData:  function () {
+                this.errors = ''
                 this.isBusy = true
                 const data = this.$store.state
-                return axios.post('/api/store', data )
+                axios.post('/api/store', data )
                     .then(({ data : { data } }) => {
                         this.isBusy =false
                         this.notification = data.paymentDataId
@@ -96,6 +100,7 @@
                             window.location.reload()
                         }, 3000)
                     }).catch(error => {
+                        this.errors = error.response.data.data
                         this.isBusy = false;
                     })
             }
@@ -103,7 +108,8 @@
         components: {
             Payment,
             PersonalInformation,
-            'address-info' : Address
+            'address-info' : Address,
+            'errors': RequestErrors
         }
     }
 </script>

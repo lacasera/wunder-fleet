@@ -8,7 +8,7 @@ use App\Actions\Interfaces\MakePaymentInterface;
 
 class MakePaymentAction implements MakePaymentInterface
 {
-    public function execute($userId, $owner, $iban)
+    public function execute($userId, $owner, $iban):object
     {
         $paymentData = Str::random(96);
 

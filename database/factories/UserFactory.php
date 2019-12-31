@@ -20,8 +20,8 @@ $factory->define(App\User::class, function (Faker $faker) {
         'last_name' => $faker->lastName,
         'phone_number' => $faker->unique()->phoneNumber,
         'street' => $faker->streetAddress,
-        'house_number' => $faker->randomNumber(),
-        'zip_code' => $faker->randomNumber(),
+        'house_number' => (string) $faker->randomNumber(),
+        'zip_code' => (string) $faker->randomNumber(),
         'city' => $faker->city
     ];
 });

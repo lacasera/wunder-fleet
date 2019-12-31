@@ -1,18 +1,6 @@
 <template>
     <div class="form-group">
         <div class="form-group">
-            <label for="formGroupExampleInput">Account Owner</label>
-            <input
-               autofocus
-               type="text"
-               required
-               class="form-control"
-               @load="setInputState"
-               :value="getAccountOwner"
-               name="account_owner"
-               placeholder="John Doe">
-        </div>
-        <div class="form-group">
             <label for="">IBAN</label>
             <input
                type="text"
@@ -29,17 +17,6 @@
 <script>
     export default {
         name: "Payment",
-        computed:{
-          getAccountOwner: function () {
-              return this.$store.state.first_name +' ' + this.$store.state.last_name
-          }
-        },
-        mounted(){
-            this.$store.dispatch('setState', {
-                name: 'account_owner',
-                value: this.$store.state.first_name +' ' + this.$store.state.last_name
-            })
-        },
         data(){
             return {
                 ...this.$store.state
@@ -54,7 +31,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>

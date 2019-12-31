@@ -7,7 +7,7 @@ use App\Actions\Interfaces\MakePaymentInterface;
 
 class MakePaymentAction implements MakePaymentInterface
 {
-    const WUNDER_ENDPOINT = 'https://37f32cl571.execute-api.eu-central-1.amazonaws.com/default/wunderfleet-recruiting-backend-dev-save-payment-data';
+    const ENDPOINT = 'https://37f32cl571.execute-api.eu-central-1.amazonaws.com/default/wunderfleet-recruiting-backend-dev-save-payment-data';
 
     protected $client;
 
@@ -16,9 +16,15 @@ class MakePaymentAction implements MakePaymentInterface
         $this->client = $client;
     }
 
-    public function execute($userId, $accountOwner, $iban)
+    /**
+     * @param $userId
+     * @param $accountOwner
+     * @param $iban
+     * @return mixed
+     */
+    public function execute($userId, $accountOwner, $iban): object
     {
-        $response = $this->client->post(self::WUNDER_ENDPOINT, [
+        $response = $this->client->post(self::ENDPOINT, [
                 "json" => [
                     'customerId' => $userId,
                     'owner' => $accountOwner,

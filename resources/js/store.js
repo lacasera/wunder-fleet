@@ -15,8 +15,7 @@ const store = new Vuex.Store({
         house_number: '',
         zip_code: '',
         city: '',
-        iban: '',
-        account_owner: ''
+        iban: ''
     },
     plugins: [
         createPersistedState({

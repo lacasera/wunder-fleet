@@ -32,9 +32,9 @@ DB_USERNAME={database username}
 DB_PASSWORD={database password}
 ```
 
-
 #### Stack
 1. Backend
- - Laravel with mysql
+ - [Laravel](https://laravel.com)
 2. Frontend
-- Vuejs with Vuex
+- [Vuejs](https://vuejs.org/) with [Vuex](https://vuex.vuejs.org/)
+
