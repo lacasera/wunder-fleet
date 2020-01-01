@@ -4,12 +4,13 @@
 ### Setup
 1. clone repository. and cd into the project
 2. run `composer install` to install dependancies
-3. create a `.env` from `.env.sample` by running `cp .env .env.sample`
-4. create a database of your choice (mysql/sqlite)
-5. update the `.env` with the correct database credentials
-6. run `npm install && npm run dev` to install npm dependencies and build project
-7. serve the project by running `php artisan serve --port 8001` 
-8. open the project by visiting `http://localhost:8001`
+3. run `composer dump-autoload`
+4. create a `.env` from `.env.sample` by running `cp .env .env.sample`
+5. create a database of your choice (mysql/sqlite)
+6. update the `.env` with the correct database credentials
+7. run `npm install && npm run dev` to install npm dependencies and build project
+8. serve the project by running `php artisan serve --port 8001` 
+9. open the project by visiting `http://localhost:8001`
 
 
 ### Database Setup
@@ -38,4 +39,5 @@ DB_PASSWORD={database password}
 2. Frontend
 - [Vuejs](https://vuejs.org/) with [Vuex](https://vuex.vuejs.org/)
 
-####
+####Code Structure
+The code structure used is the MVC pattern with SOLID design principles because that is what I'm familiar and confortable with
