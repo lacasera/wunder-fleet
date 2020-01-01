@@ -39,5 +39,10 @@ DB_PASSWORD={database password}
 2. Frontend
 - [Vuejs](https://vuejs.org/) with [Vuex](https://vuex.vuejs.org/)
 
+####Testing 
+run `vendor/bin/phpunit --testdox` to run test cases
+
 ####Code Structure
-The code structure used is the MVC pattern with SOLID design principles because that is what I'm familiar and confortable with
+The code structure used is the MVC pattern with SOLID design principles because that is what I'm familiar and 
+confortable with even though I've found a [great resource](https://academy.realm.io/posts/mvc-vs-mvp-vs-mvvm-vs-mvi-mobilization-moskala/) 
+to gain more understanding to the `MVP/MVI/MVVM` patterns. 
